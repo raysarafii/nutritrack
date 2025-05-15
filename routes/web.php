@@ -7,7 +7,9 @@ use App\Http\Controllers\AsupanController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\KonsultasiController;
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 
 Route::view('/register', 'auth.register-vue')->name('register');

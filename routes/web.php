@@ -23,6 +23,25 @@ Route::get('/', function () {
     return view('home');
 });
 
+//Google Login
+Route::get('/auth/redirect/google', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+Route::get('/auth/callback/google', function () {
+    $googleUser = Socialite::driver('google')->stateless()->user();
+
+    $user = User::updateOrCreate([
+        'email' => $googleUser->getEmail(),
+    ], [
+        'name' => $googleUser->getName(),
+        'google_id' => $googleUser->getId(),
+    ]);
+
+    Auth::login($user);
+
+    return redirect('/dashboard');
+});
 
 Route::middleware(['auth'])->group(function () {
 

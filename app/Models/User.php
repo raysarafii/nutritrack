@@ -28,7 +28,8 @@ class User extends Authenticatable
         'umur',
         'pekerjaan',
         'riwayat_kesehatan',
-        'alergi', 
+        'alergi',
+        'google_id', 
     ];
 
     /**

@@ -33,10 +33,12 @@
         </form>
 
         <div class="mt-6 text-center">
-            <button class="w-full p-3 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-100">
+             <a href="/auth/redirect/google">
+         <button class="w-full p-3 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-100">
                 <img :src="googleIconUrl" alt="Google" class="w-7 h-7 mr-2">
                 Sign In with Google
             </button>
+            </a>            
         </div>
     </div>
 </template>

@@ -1,5 +1,4 @@
 <template>
-    <!-- Root Element -->
     <div class="w-full md:w-3/4 px-8 py-12">
         <h2 class="text-2xl font-bold text-left mb-6">Login Page</h2>
 
@@ -20,11 +19,16 @@
                 <label for="password" class="text-gray-600 text-sm block mb-1">Password</label>
                 <input type="password" id="password" v-model="formData.password" placeholder="Password" 
                     class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <div class="flex justify-end mt-1">
+                    <a href="/forgot-password" class="text-blue-500 text-xs font-medium">Forgot Password?</a>
+                </div>
             </div>
 
             <button type="submit" 
-                class="w-full p-3 text-white font-bold rounded-lg bg-gradient-to-r from-[#007AFF] to-[#00D26A] shadow-md hover:opacity-90 transition duration-300">
-                Login
+                class="w-full p-3 text-white font-bold rounded-lg bg-gradient-to-r from-[#007AFF] to-[#00D26A] shadow-md hover:opacity-90 transition duration-300"
+                :disabled="loading">
+                <span v-if="loading">Logging in...</span>
+                <span v-else>Login</span>
             </button>
 
             <p class="text-gray-600 text-xs text-left mt-2">
@@ -33,7 +37,7 @@
         </form>
 
         <div class="mt-6 text-center">
-             <a href="/auth/redirect/google">
+            <a href="/auth/redirect/google">
          <button class="w-full p-3 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-100">
                 <img :src="googleIconUrl" alt="Google" class="w-7 h-7 mr-2">
                 Sign In with Google
@@ -55,6 +59,7 @@ export default {
                 password: ''
             },
             errors: [],
+            loading: false,
             logoUrl: '/images/logo.png',
             foodImageUrl: '/images/healthy-food.png',
             googleIconUrl: '/images/google-icon.png'
@@ -68,43 +73,66 @@ export default {
         login() {
             this.errors = [];
 
-            if (!this.formData.email) this.errors.push('Email is required');
-            if (!this.formData.password) this.errors.push('Password is required');
-
-            if (this.errors.length === 0) {
-                const formData = new FormData();
-                formData.append('email', this.formData.email);
-                formData.append('password', this.formData.password);
-                formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
-
-                fetch('/login', {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
-                    redirect: 'follow'
-                })
-                .then(response => {
-                    if (response.redirected) {
-                        window.location.href = response.url;
-                    } else {
-                        return response.json();
-                    }
-                })
-                .then(data => {
-                    if (data && data.errors) {
-                        for (const key in data.errors) {
-                            this.errors.push(data.errors[key]);
-                        }
-                        this.toast.error('Login failed. Please check your credentials.');
-                    }
-                })
-                .catch(error => {
-                    this.toast.error('An error occurred during login.');
-                    console.error('Login error:', error);
-                });
-            } else {
-                this.toast.error('Please fix the errors in the form.');
+            if (!this.formData.email) {
+                this.errors.push('Email is required');
+                this.toast.error('Please enter your email');
+                return;
             }
+            
+            if (!this.formData.password) {
+                this.errors.push('Password is required');
+                this.toast.error('Please enter your password');
+                return;
+            }
+
+            this.loading = true;
+
+            fetch('/login', {
+                method: 'POST',
+                body: JSON.stringify(this.formData),
+                headers: { 
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                redirect: 'follow'
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                    return null;
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data) return; // Handle redirect case
+                
+                this.loading = false;
+                
+                if (data.success === false && data.errors) {
+                    // Handle validation errors
+                    for (const field in data.errors) {
+                        if (Array.isArray(data.errors[field])) {
+                            data.errors[field].forEach(error => {
+                                this.errors.push(error);
+                            });
+                        } else {
+                            this.errors.push(data.errors[field]);
+                        }
+                    }
+                    this.toast.error('Invalid credentials. Please check your email and password.');
+                } else if (data.success === true && data.redirect) {
+                    // Successful login with JSON response
+                    this.toast.success('Login successful!');
+                    window.location.href = data.redirect;
+                }
+            })
+            .catch(error => {
+                this.loading = false;
+                this.toast.error('An error occurred during login. Please try again.');
+                console.error('Login error:', error);
+            });
         }
     }
 };

@@ -1,4 +1,5 @@
 <template>
+    <!-- Root Element -->
     <div class="w-full md:w-3/4 px-8 py-12">
         <h2 class="text-2xl font-bold text-left mb-6">Login Page</h2>
 
@@ -87,7 +88,7 @@ export default {
 
             this.loading = true;
 
-            fetch('/login', {
+            fetch('/api/login', {
                 method: 'POST',
                 body: JSON.stringify(this.formData),
                 headers: { 

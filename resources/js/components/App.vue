@@ -1,84 +1,103 @@
 <template>
-    <!-- Navbar -->
-    <nav class="bg-white shadow-md py-4 px-6">
-        <div class="container mx-auto flex justify-between items-center relative">
-            <!-- Logo -->
-            <div class="flex items-center space-x-2">
-                <img :src="logo" alt="NutriTrack Logo" class="h-10">
-                <h1 class="text-2xl font-bold bg-gradient-to-r from-[#007AFF] to-[#00D26A] bg-clip-text text-transparent">
-                    NutriTrack
-                </h1>
-            </div>
+  <nav class="bg-white shadow-md py-4 px-6 sticky top-0 z-40">
+    <div class="container mx-auto flex justify-between items-center relative">
+      <div class="flex items-center space-x-2">
+        <img :src="logo" alt="NutriTrack Logo" class="h-10">
+        <h1 class="text-2xl font-bold bg-gradient-to-r from-[#007AFF] to-[#00D26A] bg-clip-text text-transparent">
+          NutriTrack
+        </h1>
+      </div>
 
-            <!-- Desktop Menu -->
-            <div class="hidden lg:flex space-x-6 text-white bg-gradient-to-r from-[#007AFF] to-[#00D26A] px-6 py-2 rounded-full items-center justify-center">
-                <a href="#" class="px-4 py-2 hover:opacity-80">Program</a>
-                <a href="#" class="px-4 py-2 hover:opacity-80">FAQ</a>
-                <a href="#" class="px-4 py-2 hover:opacity-80">Tentang Kami</a>
-                <a href="#" class="px-4 py-2 hover:opacity-80">Testimoni</a>
-            </div>
-
-            <div class="hidden lg:flex space-x-6 text-white bg-gradient-to-r from-[#007AFF] to-[#00D26A] px-6 py-2 rounded-full items-center justify-center">
-                <a href="/login" class="px-4 py-2 hover:opacity-80">Login</a>
-                <a href="/register" class="px-4 py-2 hover:opacity-80">Register</a>
-            </div>
-
-            <!-- Mobile Menu Button -->
-            <button id="menu-btn" class="lg:hidden focus:outline-none">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
+      <div class="hidden lg:block lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2">
+        <div class="flex space-x-2 text-white bg-gradient-to-r from-[#007AFF] to-[#00D26A] px-4 py-2 rounded-full">
+          <a href="#program" class="px-3 py-1 hover:opacity-80">Program</a>
+          <a href="#faq" class="px-3 py-1 hover:opacity-80">FAQ</a>
+          <a href="#" class="px-3 py-1 hover:opacity-80">Tentang Kami</a>
+          <a href="#testimonials" class="px-3 py-1 hover:opacity-80">Testimoni</a>
+        </div>
+      </div>
+      
+      <div class="flex items-center">
+        <div class="hidden lg:flex space-x-2">
+          <a href="/login" class="px-5 py-2 text-blue-600 border border-blue-400 rounded-full hover:bg-blue-50">Login</a>
+          <a href="/register" class="px-5 py-2 text-white bg-gradient-to-r from-[#007AFF] to-[#00D26A] rounded-full hover:opacity-90">Register</a>
         </div>
 
-        <!-- Mobile Menu -->
-        <div id="menu" class="hidden flex flex-col items-center bg-white shadow-md py-4 space-y-4 lg:hidden">
-            <a href="#" class="px-4 py-2 text-gray-800">Program</a>
-            <a href="#" class="px-4 py-2 text-gray-800">FAQ</a>
-            <a href="#" class="px-4 py-2 text-gray-800">Tentang Kami</a>
-            <a href="#" class="px-4 py-2 text-gray-800">Testimoni</a>
-        </div>
-    </nav>
+        <button @click="toggleMobileMenu" class="lg:hidden focus:outline-none z-50 ml-4">
+          <svg v-if="!isMobileMenuOpen" class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg v-else class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
 
-    <!-- Main Content -->
-    <main>
-        <HomePage />
-    </main>
+  <div v-if="isMobileMenuOpen" @click="toggleMobileMenu" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"></div>
+
+  <div id="menu" 
+       class="fixed top-0 right-0 h-full bg-gradient-to-b from-[#007AFF] to-[#00D26A] w-64 shadow-lg transform transition-transform duration-300 ease-in-out z-50 lg:hidden"
+       :class="isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'">
+    
+    <div class="flex flex-col items-center py-16 space-y-6">
+      <a href="#program" @click="handleMenuClick" class="px-4 py-2 text-white text-lg font-semibold">Program</a>
+      <a href="#faq" @click="handleMenuClick" class="px-4 py-2 text-white text-lg font-semibold">FAQ</a>
+      <a href="#" @click="handleMenuClick" class="px-4 py-2 text-white text-lg font-semibold">Tentang Kami</a>
+      <a href="#testimonials" @click="handleMenuClick" class="px-4 py-2 text-white text-lg font-semibold">Testimoni</a>
+      <div class="pt-8 w-full px-8 space-y-4">
+        <a href="/login" class="block w-full text-center px-5 py-2 text-white border border-white rounded-full hover:bg-white hover:text-blue-600">Login</a>
+        <a href="/register" class="block w-full text-center px-5 py-2 text-blue-600 bg-white rounded-full hover:opacity-90">Register</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <HomePage />
+  </main>
 </template>
 
 <script>
 import HomePage from './HomePage.vue';
 
 export default {
-    name: 'App',
-    components: {
-        HomePage
+  name: 'App',
+  components: {
+    HomePage
+  },
+  data() {
+    return {
+      logo: '/images/logo.png',
+      isMobileMenuOpen: false
+    };
+  },
+  methods: {
+    toggleMobileMenu() {
+      this.isMobileMenuOpen = !this.isMobileMenuOpen;
     },
-    data() {
-        return {
-            logo: '/images/logo.png'
-        };
-    },
-    mounted() {
-        // Mobile menu toggle
-        const menuBtn = document.getElementById('menu-btn');
-        if (menuBtn) {
-            menuBtn.addEventListener('click', function () {
-                const menu = document.getElementById('menu');
-                if (menu) {
-                    menu.classList.toggle('hidden');
-                }
-            });
-        }
+    // MODIFIED: Method baru untuk menutup menu saat link di-klik
+    handleMenuClick() {
+      // Menutup sidebar jika sedang terbuka
+      if (this.isMobileMenuOpen) {
+        this.isMobileMenuOpen = false;
+      }
+      // Browser akan menangani scroll ke #id secara otomatis
     }
+  }
 }
 </script>
 
 <style>
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
+/* MODIFIED: Menambahkan rule ini untuk efek smooth scroll */
+html {
+  scroll-behavior: smooth;
 }
-</style> 
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+</style>

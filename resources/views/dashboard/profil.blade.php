@@ -99,15 +99,38 @@
                 </button>
             </form>
 
-            <script>
-                function confirmDeletion() {
-                    if (confirm("Apakah Anda yakin ingin menghapus akun?")) {
-                        document.getElementById('delete-account-form').submit();
-                    }
-                }
-            </script>
+            <!-- Popup Konfirmasi Hapus Akun -->
+            <div id="popup-blur" class="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+                <div class="bg-white rounded-xl shadow-lg p-8 max-w-sm w-full text-center">
+                    <h2 class="text-xl font-semibold mb-4">Konfirmasi Hapus Akun</h2>
+                    <p class="mb-6">Apakah Anda yakin ingin menghapus akun?</p>
+                    <div class="flex justify-center gap-4 w-full">
+                        <button type="button" onclick="submitDeleteForm()" class="w-1/2 px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600">Ya</button>
+                        <button type="button" onclick="closePopup()" class="w-1/2 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100">Tidak</button>
+                    </div>
+                </div>
+            </div>
         </li>
     </ul>
 </div>
 
 @endsection
+
+<style>
+    .backdrop-blur-sm {
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+    }
+</style>
+
+<script>
+    function confirmDeletion() {
+        document.getElementById('popup-blur').classList.remove('hidden');
+    }
+    function closePopup() {
+        document.getElementById('popup-blur').classList.add('hidden');
+    }
+    function submitDeleteForm() {
+        document.getElementById('delete-account-form').submit();
+    }
+</script>

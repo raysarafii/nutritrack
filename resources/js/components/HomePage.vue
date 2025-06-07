@@ -17,11 +17,21 @@
         </div>
     </section>
 
+    <!-- Auto Scroll Image Section -->
+    <section class="relative bg-white py-2" style="overflow: visible;">
+        <div class="scroller">
+            <div class="scroller__inner">
+                <img v-for="(src, idx) in scrollerImages" :key="'img-'+idx" :src="src" :alt="`Card ${idx % 3 + 1}`" class="rounded-xl object-cover h-[110px] w-[180px] shadow-md" />
+            </div>
+        </div>
+    </section>
+
     <!-- Cards Section -->
-    <section class="relative z-20 bg-white py-12 px-6">
-        <h2 class="text-3xl font-bold text-center mb-6 text-[#003266]">
-            Manfaat Mengelola Gula & Kalori
+     <section id="program" class="relative z-20 bg-white py-12 px-6">
+        <h2 class="text-3xl font-bold text-center mb-6">
+            Mari Kendalikan Gula & Kalori untuk Hidup Sehat!
         </h2>
+        <br/>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div class="bg-white p-6 rounded-lg shadow-md text-center">
                 <img :src="cardImages.diabetes" alt="Mencegah Diabetes" class="mb-4 w-full">
@@ -42,7 +52,7 @@
     </section>
 
    <!-- FAQ Section -->
- <section class="relative z-20 bg-white py-12 px-6 flex flex-col items-center">
+  <section id="faq" class="relative z-20 bg-white py-12 px-6 flex flex-col items-center" style="font-family: 'Poppins', sans-serif;">
     <div class="max-w-screen-md w-full">
         <h2 class="text-3xl font-bold text-center mb-8" style="font-family: 'Poppins', sans-serif;">
             Pertanyaan yang Sering Diajukan (FAQ)
@@ -84,10 +94,118 @@
     </div>
 </section>
 
+<!-- Testimonials Section -->
+<section id="testimonials" class="relative z-20 bg-white py-12 px-6" style="font-family: 'Inter', sans-serif;">
+    <h2 class="text-3xl font-bold text-center mb-8 text-[#003266]">
+        Testimoni Pengguna
+    </h2>
+    
+    <div class="flex flex-col items-center">
+        <div class="max-w-4xl mx-auto">
+            <!-- Testimonial Carousel -->
+            <div class="relative">
+                <!-- Testimonial Cards -->
+                <transition-group name="slide" mode="out-in">
+                    <div v-if="currentTestimonial === 0" key="testimonial-1" class="bg-white rounded-lg shadow-lg p-6 mx-10 cursor-pointer" @click="nextTestimonial">
+                        <div class="flex flex-col md:flex-row items-center gap-6">
+                            <div class="testimonial-container">
+                                <img :src="testimonials[0].image" :alt="testimonials[0].name" class="testimonial-image">
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                    </svg>
+                                </div>
+                                <p class="text-gray-700 italic mb-4">{{ testimonials[0].text }}</p>
+                                <div>
+                                    <h4 class="font-bold text-lg text-[#003266]">{{ testimonials[0].name }}</h4>
+                                    <p class="text-sm text-gray-500">{{ testimonials[0].role }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-if="currentTestimonial === 1" key="testimonial-2" class="bg-white rounded-lg shadow-lg p-6 mx-10 cursor-pointer" @click="nextTestimonial">
+                        <div class="flex flex-col md:flex-row items-center gap-6">
+                            <div class="testimonial-container">
+                                <img :src="testimonials[1].image" :alt="testimonials[1].name" class="testimonial-image">
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                    </svg>
+                                </div>
+                                <p class="text-gray-700 italic mb-4">{{ testimonials[1].text }}</p>
+                                <div>
+                                    <h4 class="font-bold text-lg text-[#003266]">{{ testimonials[1].name }}</h4>
+                                    <p class="text-sm text-gray-500">{{ testimonials[1].role }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-if="currentTestimonial === 2" key="testimonial-3" class="bg-white rounded-lg shadow-lg p-6 mx-10 cursor-pointer" @click="nextTestimonial">
+                        <div class="flex flex-col md:flex-row items-center gap-6">
+                            <div class="testimonial-container">
+                                <img :src="testimonials[2].image" :alt="testimonials[2].name" class="testimonial-image">
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                    </svg>
+                                </div>
+                                <p class="text-gray-700 italic mb-4">{{ testimonials[2].text }}</p>
+                                <div>
+                                    <h4 class="font-bold text-lg text-[#003266]">{{ testimonials[2].name }}</h4>
+                                    <p class="text-sm text-gray-500">{{ testimonials[2].role }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </transition-group>
+            </div>
+
+            <!-- Indicator Dots -->
+            <div class="flex justify-center mt-6">
+                <button 
+                    v-for="(_, index) in testimonials" 
+                    :key="index" 
+                    @click="currentTestimonial = index"
+                    class="w-3 h-3 rounded-full mx-1 focus:outline-none" 
+                    :class="index === currentTestimonial ? 'bg-blue-500' : 'bg-gray-300'"
+                ></button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<!-- Font Awesome untuk ikon WhatsApp -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-TU8KVLNOKdH1xYEdzZr79M4LhvmuQIG0OHPuytuY0ZkTr5cfWdvV5pZbUsIq4Y0G6AMYv7xz+G+vE4M1jEILRQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- Call to Action Section -->
+<section class="relative z-20 bg-white py-12 px-6" style="font-family: 'Inter', sans-serif;">
+    <h2 class="text-3xl font-bold text-center mb-8">
+        Yuk, mulai hidup sehat sekarang! 
+    </h2>
+    <h2 class="text-3xl font-bold text-center mb-8">
+        Kendalikan asupan gula dan kalori untuk 
+    </h2>
+    <h2 class="text-3xl font-bold text-center mb-8">
+        tubuh yang lebih bertenaga dan seimbang!
+    </h2>
+    </section>
+ 
+
+
 <!-- Footer Section -->
 <footer class="bg-[#0B3C72] text-white py-10 px-6">
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Left Section -->
+        <!-- Left Section
+ -->
         <div>
             <div class="flex items-center space-x-3">
                 <img :src="logo" alt="NutriTrack" class="h-30 w-auto">
@@ -184,7 +302,36 @@ export default {
                 blood: '/images/blood.jpg',
                 food: '/images/food.jpg',
                 sugarTypes: '/images/sugar.jpg'
-            }
+            },
+            testimonials: [
+                {
+                    image: '/images/testi3.png',
+                    name: 'Intan Permata',
+                    text: 'Bergabung dengan NutriTrack telah mengubah pola hidup saya. Sekarang, saya lebih sadar akan asupan gula dan kalori yang saya konsumsi setiap hari. Pengalaman ini tidak hanya membantu saya menjalani hidup lebih sehat, tetapi juga mengajarkan betapa pentingnya menjaga keseimbangan nutrisi untuk tubuh yang lebih bertenaga dan bebas dari risiko penyakit',
+                    role: 'User'
+                },
+                {
+                    image: '/images/testi1.jpeg',
+                    name: 'Siti Aisyah',
+                    text: 'Saya sangat terbantu dengan fitur-fitur yang disediakan oleh NutriTrack. Saya lebih mudah mengontrol asupan gula dan kalori, dan saya merasa lebih sehat dan energik',
+                    role: 'User'
+                },
+                {
+                    image: '/images/intan.jpg',
+                    name: 'Siti Rahayu',
+                    text: 'Sejak menggunakan NutriTrack, saya lebih memahami apa yang saya konsumsi setiap harinya. Aplikasi ini memberikan edukasi yang sangat bermanfaat dan mudah dipahami tentang manfaat nutrisi untuk kesehatan jangka panjang.',
+                    role: 'User'
+                }
+            ],
+            currentTestimonial: 0,
+            scrollerImages: [
+                '/images/card1.png',
+                '/images/card2.png',
+                '/images/card3.png',
+                '/images/card1.png',
+                '/images/card2.png',
+                '/images/card3.png',
+            ],
         };
     },
     mounted() {
@@ -213,6 +360,11 @@ export default {
                     menu.classList.toggle('hidden');
                 }
             });
+        }
+    },
+    methods: {
+        nextTestimonial() {
+            this.currentTestimonial = (this.currentTestimonial + 1) % this.testimonials.length;
         }
     }
 }
@@ -245,5 +397,77 @@ body {
 /* Mobile Menu */
 #menu {
     transition: max-height 0.3s ease-in-out;
+}
+
+/* Testimonial Transitions */
+.slide-enter-active,
+.slide-leave-active {
+    transition: all 0.5s ease;
+}
+
+.slide-enter-from {
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+.slide-leave-to {
+    opacity: 0;
+    transform: translateX(-50px);
+}
+
+/* Testimonial Images */
+.testimonial-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.testimonial-container {
+    width: 32px;
+    height: 32px;
+    min-width: 80px;
+    min-height: 80px;
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid #90caf9;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.scroller {
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+.scroller__inner {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: nowrap;
+    width: max-content;
+    animation: scroll-right 18s linear infinite;
+}
+
+@keyframes scroll-right {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+#program,
+#faq,
+#testimonials {
+  scroll-margin-top: 5rem;
 }
 </style> 

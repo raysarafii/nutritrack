@@ -2,6 +2,17 @@
 
 @section('title', 'Dashboard')
 
-@section('content')
+@section('head')
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    @vite('resources/js/dashboard.js')
+@endsection
 
+@section('content')
+    <div id="dashboard-app">
+    </div>
+    
+    <script>
+        window.dailyData = @json($dailyData);
+        window.routeCreate = "{{ route('asupan.create') }}";
+    </script>
 @endsection

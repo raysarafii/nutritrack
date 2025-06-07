@@ -7,28 +7,26 @@ use App\Http\Controllers\AsupanController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\KonsultasiController;
-use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\PilihanSehatController;
 
 
 Route::view('/register', 'auth.register-vue')->name('register');
-Route::post('/api/register', [RegisterController::class, 'register']);  
 Route::get('/login', function() {
     if (Auth::check()) {
         return redirect()->route('profil');
     }
     return view('auth.login-vue');
 })->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::get('/', function () {
-    return view('home');
-});
-
 //Google Login
 Route::get('/auth/redirect/google', function () {
     return Socialite::driver('google')->redirect();
 });
+Route::post('/api/login', [LoginController::class, 'login']);
 
 Route::get('/auth/callback/google', function () {
     $googleUser = Socialite::driver('google')->stateless()->user();
@@ -45,32 +43,38 @@ Route::get('/auth/callback/google', function () {
     return redirect('/dashboard');
 });
 
+
+// Forgot Password Routes
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/api/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::post('/api/verify-otp', [ForgotPasswordController::class, 'verifyOtp'])->name('password.verify');
+Route::post('/api/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+Route::get('/', function () {
+    return view('home');
+});
+
+
 Route::middleware(['auth'])->group(function () {
-
-    //
-    Route::get('/sehat', function () {
-        return view('dashboard.pilihansehat');
-    });
-    Route::get('/sehat/minuman', function () {
-        return view('dashboard.pilihansehat.minumansehat');
-    });
-    Route::get('/sehat/buah', function () {
-        return view('dashboard.pilihansehat.buahsehat');
-    });
-    Route::get('/sehat/sayur', function () {
-        return view('dashboard.pilihansehat.sayur');
-    });
-    Route::get('/sehat/protein', function () {
-        return view('dashboard.pilihansehat.minumansehat');
-    });
-    Route::get('/sehat/karbohidrat', function () {
-        return view('dashboard.pilihansehat.proteinsehat');
-    });
      Route::get('/dashboard', function () {
-        return view('dashboard.index');
+        $asupanController = new \App\Http\Controllers\AsupanController();
+        $dailyData = $asupanController->getDailyTotals();
+        return view('dashboard.index', compact('dailyData'));
     });
+     //Pilihan Sehat
+        Route::get('/sehat', function () {
+            return view('dashboard.pilihansehat');
+        });
+        Route::get('/sehat/{kategori?}', [PilihanSehatController::class, 'index'])->name('sehat.index');
 
-
+    //Pilihan Sehat Admin
+    Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function () {
+        Route::get('pilihan-sehat', [PilihanSehatController::class, 'adminIndex'])->name('pilihan-sehat.index');
+        Route::get('pilihan-sehat/create', [PilihanSehatController::class, 'create'])->name('pilihan-sehat.create');
+        Route::post('pilihan-sehat', [PilihanSehatController::class, 'store'])->name('pilihan-sehat.store');
+        Route::get('pilihan-sehat/{pilihanSehat}/edit', [PilihanSehatController::class, 'edit'])->name('pilihan-sehat.edit');
+        Route::put('pilihan-sehat/{pilihanSehat}', [PilihanSehatController::class, 'update'])->name('pilihan-sehat.update');
+        Route::delete('pilihan-sehat/{pilihanSehat}', [PilihanSehatController::class, 'destroy'])->name('pilihan-sehat.destroy');
+    });
     Route::get('/asupan', [AsupanController::class, 'create'])->name('asupan.create');
 
     // Profile
@@ -81,7 +85,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/profil', [ProfilController::class, 'update']); 
     Route::delete('/profil/hapus-akun', [ProfilController::class, 'destroy'])->name('profil.destroy');
     
-    // Profile API for Vue
+    // Profile API
     Route::get('/api/user/profile', [ProfilController::class, 'getProfileData']);
     Route::put('/api/user/profile', [ProfilController::class, 'updateProfileApi']);
 
@@ -102,8 +106,6 @@ Route::get('/konsultasi/chat/user/{userId}', [KonsultasiController::class, 'chat
 
  Route::get('/konsultasi/fetch-messages/{role}', [KonsultasiController::class, 'fetchMessages'])->name('konsultasi.fetch');
  Route::get('/konsultasi/chat/user/{userId}/messages', [KonsultasiController::class, 'fetchMessagesFromUser'])->name('konsultasi.fetch.user');
-
-
 
     //logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

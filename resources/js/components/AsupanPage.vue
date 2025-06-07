@@ -4,13 +4,14 @@
       Input Data Konsumsi Harianmu!
     </h1>
 
-    <div class="grid grid-cols-6 md:grid-cols-1 gap-6">
-      <div class="md:col-span-2 bg-white rounded-2xl shadow p-6">
+    <div class="flex flex-col gap-6">
+      
+      <div class="bg-white rounded-2xl shadow p-4 sm:p-6">
         <h2 class="text-xl font-semibold mb-2">Catatan Asupan</h2>
         <p class="text-sm text-gray-500 mb-6">Isi data konsumsi makanan/minuman kamu di bawah ini</p>
 
         <form @submit.prevent="submitAsupan" class="space-y-4 w-full">
-          <div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-2 sm:gap-4">
             <label class="font-semibold text-[#003266] text-md">Makanan / Minuman</label>
             <input 
               type="text" 
@@ -19,8 +20,8 @@
             />
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-4">
-            <label class="font-semibold text-[#003266] text-md">Kadar Gula</label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-2 sm:gap-4">
+            <label class="font-semibold text-[#003266] text-md">Kadar Gula (gram)</label>
             <input 
               type="text" 
               v-model="asupan.kadar_gula"
@@ -28,8 +29,8 @@
             />
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-4">
-            <label class="font-semibold text-[#003266] text-md">Kadar Kalori</label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-2 sm:gap-4">
+            <label class="font-semibold text-[#003266] text-md">Kadar Kalori (kcal)</label>
             <input 
               type="text" 
               v-model="asupan.kadar_kalori"
@@ -37,7 +38,7 @@
             />
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-2 sm:gap-4">
             <label class="font-semibold text-[#003266] text-md">Tanggal Konsumsi</label>
             <input 
               type="date" 
@@ -46,7 +47,7 @@
             />
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-2 sm:gap-4">
             <label class="font-semibold text-[#003266] text-md">Waktu Konsumsi</label>
             <input 
               type="text" 
@@ -55,7 +56,7 @@
             />
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-2 sm:gap-4">
             <label class="font-semibold text-[#003266] text-md">Catatan</label>
             <input 
               type="text" 
@@ -81,11 +82,37 @@
           </div>
         </form>
       </div>
+      
+      <div class="bg-white rounded-2xl shadow p-4 sm:p-6">
+        <h2 class="text-lg font-semibold mb-4">Cek Gula & Kalori Otomatis</h2>
+        <div class="flex flex-col sm:flex-row gap-4 items-center">
+          <input
+            type="text"
+            v-model="cekNama"
+            placeholder="Masukkan nama makanan/minuman"
+            class="border border-blue-400 rounded-xl px-4 py-2 w-full"
+          />
+          <button type="button" @click="cekGulaKaloriOtomatis" :disabled="isChecking"
+            class="px-6 py-2 rounded-xl border border-blue-300 text-blue-600 hover:bg-blue-50 transition w-full sm:w-auto text-center whitespace-nowrap">
+            {{ isChecking ? 'Mengecek...' : 'Cek Gula & Kalori' }}
+          </button>
+        </div>
+        <div v-if="cekHasil" class="mt-4 text-sm text-gray-700 p-4 bg-blue-50 rounded-lg">
+          <div><b>Nama:</b> {{ cekHasil.nama }}</div>
+          <div><b>Gula:</b> {{ cekHasil.gula }} gram</div>
+          <div><b>Kalori:</b> {{ cekHasil.kalori }} kcal</div>
+          <button @click="isiKeForm" class="mt-3 px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold transition">
+            Isi ke Form
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
 
 <script>
+// Bagian script tetap sama dan tidak perlu diubah.
 import { reactive, ref, onMounted } from 'vue';
 import { useToast } from 'vue-toastification';
 import axios from 'axios';
@@ -103,11 +130,14 @@ export default {
   setup() {
     const toast = useToast();
     const isSubmitting = ref(false);
+    const isChecking = ref(false);
+    const cekNama = ref("");
+    const cekHasil = ref(null);
     
     const asupan = reactive({
       nama: 'Teh Manis',
-      kadar_gula: '15g',
-      kadar_kalori: '60 kcal',
+      kadar_gula: '15',
+      kadar_kalori: '60',
       tanggal_konsumsi: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
       waktu_konsumsi: 'Pagi',
       catatan: 'Minum dengan sarapan'
@@ -128,8 +158,8 @@ export default {
         await axios.post('/asupan', formData);
         toast.success('Asupan berhasil disimpan');
         asupan.nama = 'Teh Manis';
-        asupan.kadar_gula = '15g';
-        asupan.kadar_kalori = '60 kcal';
+        asupan.kadar_gula = '15';
+        asupan.kadar_kalori = '60';
         asupan.tanggal_konsumsi = new Date().toISOString().split('T')[0];
         asupan.waktu_konsumsi = 'Pagi';
         asupan.catatan = 'Minum dengan sarapan';
@@ -145,12 +175,80 @@ export default {
         isSubmitting.value = false;
       }
     };
+
+    // Fungsi cek gula & kalori otomatis (untuk input di bawah box)
+    const cekGulaKaloriOtomatis = async () => {
+      if (!cekNama.value) {
+        toast.error('Masukkan nama makanan/minuman terlebih dahulu!');
+        return;
+      }
+      isChecking.value = true;
+      cekHasil.value = null;
+      try {
+        const response = await axios.get('/api/usda-proxy', {
+          params: {
+            query: cekNama.value
+          }
+        });
+        const foods = response.data.foods;
+        if (foods && foods.length > 0) {
+          const food = foods[0];
+          let gula = null;
+          let kalori = null;
+          const gulaNames = [
+            'Sugars, total including NLEA',
+            'Sugars',
+            'Total Sugars',
+            'Sugars, total',
+            'Total Sugars (g)'
+          ];
+          if (food.foodNutrients) {
+            for (const n of food.foodNutrients) {
+              if (!gula && n.nutrientName && gulaNames.some(name => n.nutrientName.toLowerCase() === name.toLowerCase())) {
+                gula = n.value;
+              }
+              if (!kalori && (n.nutrientName === 'Energy' || n.nutrientName === 'Energy (Atwater General Factors)')) {
+                kalori = n.value;
+              }
+            }
+          }
+          cekHasil.value = {
+            nama: food.description,
+            gula: gula !== null ? gula : '-',
+            kalori: kalori !== null ? kalori : '-'
+          };
+          toast.success('Data ditemukan!');
+        } else {
+          toast.error('Makanan/minuman tidak ditemukan di database USDA.');
+        }
+      } catch (err) {
+        toast.error('Gagal mengambil data dari USDA API.');
+        console.error(err);
+      } finally {
+        isChecking.value = false;
+      }
+    };
+
+    // Fungsi untuk mengisi hasil ke form utama
+    const isiKeForm = () => {
+      if (cekHasil.value) {
+        if (cekHasil.value.nama) asupan.nama = cekHasil.value.nama;
+        if (cekHasil.value.gula !== '-') asupan.kadar_gula = cekHasil.value.gula.toString();
+        if (cekHasil.value.kalori !== '-') asupan.kadar_kalori = cekHasil.value.kalori.toString();
+        toast.success('Data berhasil diisi ke form!');
+      }
+    };
     
     return {
       asupan,
       isSubmitting,
-      submitAsupan
+      submitAsupan,
+      isChecking,
+      cekNama,
+      cekHasil,
+      cekGulaKaloriOtomatis,
+      isiKeForm
     };
   }
 }
-</script> 
+</script>

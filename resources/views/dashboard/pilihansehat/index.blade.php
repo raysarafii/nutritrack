@@ -4,12 +4,12 @@
 
 @section('content')
 <h1 class="text-3xl sm:text-4xl text-center font-bold bg-gradient-to-r from-[#007AFF] to-[#00D26A] bg-clip-text text-transparent mb-6 font-['Poppins']">
-    @if(request()->segment(2)) 
+    @if(request()->segment(2))
         {{ ucfirst(request()->segment(2)) }} Sehat
-    @elseif($items->first()) 
-        {{ $items->first()->judul }} 
-    @else 
-        Pilihan Sehat 
+    @elseif($items->first())
+        {{ $items->first()->judul }}
+    @else
+        Pilihan Sehat
     @endif
 </h1>
 
@@ -17,7 +17,8 @@
     @forelse($items as $item)
         <div class="bg-blue-100 p-6 rounded-xl shadow-md flex flex-col md:flex-row gap-4 md:gap-6 items-center">
             <img src="{{ asset($item->gambar_path) }}" alt="{{ $item->nama }}"
-                class="rounded-lg w-full sm:w-64 h-40 object-cover md:h-28" />
+                 class="rounded-lg object-cover w-full h-48 md:w-40 md:h-32 flex-shrink-0" />
+            
             <div class="text-center md:text-left">
                 <h3 class="font-semibold text-xl sm:text-2xl font-['Poppins']">{{ $item->nama }}</h3>
                 <p class="text-base sm:text-lg text-gray-700 mt-2">

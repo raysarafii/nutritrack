@@ -17,7 +17,7 @@ class PilihanSehatController extends Controller
 
         $items = $query->orderBy('urutan')->get();
 
-        return view('dashboard.pilihansehat.buahsehat', compact('items', 'kategori'));
+        return view('dashboard.pilihansehat.index', compact('items', 'kategori'));
     }
 
   public function adminIndex(Request $request)

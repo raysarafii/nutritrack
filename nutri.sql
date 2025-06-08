@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2025 at 02:01 PM
+-- Generation Time: Jun 08, 2025 at 03:26 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -194,7 +194,9 @@ INSERT INTO `messages` (`id`, `from_id`, `to_id`, `to_role`, `message`, `created
 (59, 4, 9, NULL, 'iya ada apa', '2025-05-08 22:32:00', '2025-05-08 22:32:00'),
 (60, 10, NULL, 'dokter_pencegahan', 'halo dok', '2025-05-09 00:04:04', '2025-05-09 00:04:04'),
 (61, 4, 10, NULL, 'iya ada apa', '2025-05-09 00:04:47', '2025-05-09 00:04:47'),
-(62, 10, NULL, 'dokter_pencegahan', 'saya ada keluhan', '2025-05-09 00:04:52', '2025-05-09 00:04:52');
+(62, 10, NULL, 'dokter_pencegahan', 'saya ada keluhan', '2025-05-09 00:04:52', '2025-05-09 00:04:52'),
+(64, 9, NULL, 'dokter_pencegahan', 'test', '2025-06-08 06:07:34', '2025-06-08 06:07:34'),
+(65, 4, 9, NULL, 'test', '2025-06-08 06:10:03', '2025-06-08 06:10:03');
 
 -- --------------------------------------------------------
 
@@ -331,6 +333,27 @@ CREATE TABLE `pilihan_sehat` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `pilihan_sehat`
+--
+
+INSERT INTO `pilihan_sehat` (`id`, `judul`, `kategori`, `gambar_path`, `nama`, `deskripsi`, `urutan`, `aktif`, `created_at`, `updated_at`) VALUES
+(37, 'Semangka', 'Buah', 'images/1749386430.png', 'Semangka', 'Semangka mengandung banyak air dan rendah gula. Dalam 100 gram semangka, terdapat sekitar 6 gram gula. Selain itu, semangka juga kaya akan vitamin A dan C.', 1, 1, '2025-06-08 05:40:30', '2025-06-08 05:40:30'),
+(38, 'Alpukat', 'Buah', 'images/1749386456.png', 'Alpukat', 'Satu buah alpukat yang mengandung gula sebanyak 1 gram saja. Selain itu, buah berwarna hijau ini kaya akan lemak sehat yang baik untuk kesehatan.', 2, 1, '2025-06-08 05:40:56', '2025-06-08 05:40:56'),
+(39, 'Lemon', 'Buah', 'images/1749386471.png', 'Lemon', 'Lemon adalah salah satu buah terbaik untuk mengatur gula dan kalori. Dalam 100 gram lemon, hanya terdapat sekitar 2,5 gram gula dan sekitar 29 kalori. Lemon juga kaya akan vitamin C, serat, dan memiliki efek menstabilkan gula darah.', 1, 1, '2025-06-08 05:41:11', '2025-06-08 05:41:11'),
+(40, 'Bayam', 'Sayur', 'images/1749386529.png', 'Bayam', 'Kaya akan serat dan rendah karbohidrat, membantu menstabilkan gula darah. Hanya 23 kalori per 100 gram dan hampir tidak mengandung gula.', 1, 1, '2025-06-08 05:42:09', '2025-06-08 05:42:09'),
+(41, 'Brokoli', 'Sayur', 'images/1749386550.png', 'Brokoli', 'Mengandung sulforaphane, senyawa yang dapat meningkatkan sensitivitas insulin. Hanya 35 kalori per 100 gram dan 1,7 gram gula.', 2, 1, '2025-06-08 05:42:30', '2025-06-08 05:42:30'),
+(42, 'Wortel', 'Sayur', 'images/1749386569.png', 'Wortel', 'Serat dalam wortel membantu memperlambat penyerapan gula dalam darah, sehingga mencegah lonjakan gula darah yang berbahaya bagi penderita diabetes atau mereka yang ingin mengontrol kalori.', 3, 1, '2025-06-08 05:42:49', '2025-06-08 05:42:49'),
+(43, 'Ikan Salmon', 'Protein', 'images/1749386633.png', 'Ikan Salmon', 'Kaya akan asam lemak omega-3, yang terbukti membantu meningkatkan sensitivitas insulin dan mengurangi peradangan pada penderita diabetes. inggi protein & rendah karbohidrat, sehingga tidak menyebabkan lonjakan gula darah.', 1, 1, '2025-06-08 05:43:53', '2025-06-08 05:43:53'),
+(44, 'Tempe', 'Protein', 'images/1749386652.png', 'Tempe', 'Mengandung prebiotik alami karena hasil fermentasi, yang dapat meningkatkan kesehatan usus dan memperbaiki metabolisme glukosa.', 2, 1, '2025-06-08 05:44:12', '2025-06-08 05:44:12'),
+(45, 'Telur', 'Protein', 'images/1749386665.png', 'Telur', 'Mengandung protein berkualitas tinggi, yang memperlambat penyerapan gula dalam darah. Mengandung kolin dan biotin, yang berperan dalam metabolisme lemak dan karbohidrat, membantu mengontrol gula darah (Journal of Diabetes Research, 2018).', 3, 1, '2025-06-08 05:44:25', '2025-06-08 05:44:34'),
+(46, 'Air Putih', 'Minuman', 'images/1749386745.jpg', 'Air Putih', 'Tidak mengandung kalori dan gula sehingga aman bagi penderita diabetes dan untuk diet. Membantu mengeluarkan kelebihan gula darah melalui urine dan menjaga hidrasi tubuh.', 1, 1, '2025-06-08 05:45:45', '2025-06-08 05:45:45'),
+(47, 'Teh Hijau', 'Minuman', 'images/1749386761.jpg', 'Teh Hijau', 'Mengandung katekin yang membantu meningkatkan sensitivitas insulin dan mengurangi kadar gula darah. Rendah kalori jika dikonsumsi tanpa gula. Dapat membantu menurunkan berat badan dan mengurangi risiko obesitas yang berhubungan dengan diabetes.', 2, 1, '2025-06-08 05:46:01', '2025-06-08 05:46:28'),
+(48, 'Jus Tanpa Gula', 'Minuman', 'images/1749386777.jpg', 'Jus Tanpa Gula', 'Jus dari buah rendah gula seperti lemon, apel hijau, atau stroberi dapat menjadi pilihan sehat. Membantu memenuhi kebutuhan vitamin dan mineral tanpa meningkatkan kadar gula darah secara berlebihan.', 3, 1, '2025-06-08 05:46:17', '2025-06-08 05:46:17'),
+(49, 'Nasi Merah', 'Karbohidrat', 'images/1749386954.webp', 'Nasi Merah', 'Mengandung serat tinggi yang membantu memperlambat penyerapan gula dalam darah. Indeks glikemik (GI) lebih rendah dibanding nasi putih, sehingga tidak menyebabkan lonjakan gula darah. Kaya akan vitamin B, magnesium, dan antioksidan yang mendukung metabolisme tubuh.', 1, 1, '2025-06-08 05:49:14', '2025-06-08 05:49:14'),
+(50, 'Oatmeal', 'Karbohidrat', 'images/1749386973.jpeg', 'Oatmeal', 'Mengandung beta-glukan, sejenis serat larut yang membantu menurunkan kadar gula darah dan kolesterol.  Memberikan rasa kenyang lebih lama, cocok untuk mengontrol berat badan. Indeks glikemik rendah jika dikonsumsi tanpa tambahan gula.', 2, 1, '2025-06-08 05:49:33', '2025-06-08 05:49:33'),
+(51, 'Ubi', 'Karbohidrat', 'images/1749386987.jpeg', 'Ubi', 'Mengandung serat tinggi dan vitamin A, baik untuk kesehatan mata dan sistem kekebalan tubuh. Indeks glikemik lebih rendah dibanding kentang biasa Membantu mengontrol gula darah dengan pelepasan energi yang lebih stabil.', 3, 1, '2025-06-08 05:49:47', '2025-06-08 05:49:47');
+
 -- --------------------------------------------------------
 
 --
@@ -378,9 +401,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `google_id`, `email_verified_at`, `p
 (1, 'test', 'crystalyt856@gmail.com', NULL, NULL, '$2y$12$wNcrkCaf6sPjayUuPa5kVePHANgKHPELgvX81/um/7knlrBfxzFG2', 'user', 'XUdcrWEqcC', '2025-04-21 20:22:08', '2025-04-21 20:22:08', NULL, NULL, NULL, NULL, NULL),
 (2, 'test', 'scfsdf@gmail.com', NULL, NULL, '$2y$12$sK/Ikjx8l.2ofc9KeJT20O8Ew7aUnpX97uHTZ6XcBzFqdBYtywMdS', 'user', 'DzBve1U5Yh', '2025-04-24 10:06:02', '2025-04-24 10:06:02', NULL, NULL, NULL, NULL, NULL),
 (3, 'test', 'sdfsdf@gmail.com', NULL, NULL, '$2y$10$bIt3dLXd9YJAZ4eayrK4VeQ8TT0pqlbfgUasHK7sDLlw4mH1E5kQO', 'user', 'dhM4iFzPEt', '2025-04-29 14:55:35', '2025-04-29 14:55:35', NULL, NULL, NULL, NULL, NULL),
-(4, 'raysa rafii', 'dewaraysa35@gmail.com', '101360439727054150482', NULL, '$2y$10$8fsHeuJ8RU.eLsdd0LShDecMjakV9zyC4n8MqqLOA9Ff.iXQrt2HS', 'admin', 'GxWtkDeS6JhrG2JRnLiXSX8fkdKF7SVmqy0bf7LiUakswPmAOjzQja6seiko', '2025-04-29 14:58:50', '2025-05-22 23:24:40', 20, '081334536478', 'Dokter', 'test', 'testd'),
+(4, 'raysa rafii', 'dewaraysa35@gmail.com', '101360439727054150482', NULL, '$2y$10$8fsHeuJ8RU.eLsdd0LShDecMjakV9zyC4n8MqqLOA9Ff.iXQrt2HS', 'dokter_pencegahan', 'GxWtkDeS6JhrG2JRnLiXSX8fkdKF7SVmqy0bf7LiUakswPmAOjzQja6seiko', '2025-04-29 14:58:50', '2025-05-22 23:24:40', 20, '081334536478', 'Dokter', 'test', 'testd'),
 (6, 'dfdfcv', 'dfgaa@gmail.com', NULL, NULL, '$2y$10$/TPzV5N9QyzDnYsQ12/jSuiuZbEcBuFF/Ppgc7LAor7LZsjZPM0DK', 'user', '6O0Tr9SPFT', '2025-05-01 20:16:04', '2025-05-01 20:16:04', NULL, NULL, NULL, NULL, NULL),
-(9, 'sdgdfgdfg', 'sdfsdf232@gmail.com', NULL, NULL, '$2y$10$4GnDyXgC2MAql19CImtd5OBGX6EzxXSZSqXUpiR9z9AworY52blqm', 'admin', 'dQdz8gomhQK6W8tj991HYRsbcwEj7pumKHc4nwO9LxHrzmJNryXvEu2BWCxL', '2025-05-08 12:51:40', '2025-05-08 13:09:11', 20, '0813213142342', 'Mahasiswa', '-', '-'),
+(9, 'sdgdfgdfg', 'sdfsdf232@gmail.com', NULL, NULL, '$2y$10$4GnDyXgC2MAql19CImtd5OBGX6EzxXSZSqXUpiR9z9AworY52blqm', 'admin', '1QDz3hyK7WRvk85d2azx07SPUpBRFim4liD68gsU9F1SVttA1ebfCZqO2Nf3', '2025-05-08 12:51:40', '2025-05-08 13:09:11', 20, '0813213142342', 'Mahasiswa', '-', '-'),
 (10, 'Sazkia', 'sazkia@gmail.com', NULL, NULL, '$2y$10$WJWjJ2pUkGvZrrY.T8b6MOShp3n.EGtmhOPrGhbQEA4DlJEBdwaoS', 'admin', '9bPTROxQVjyYU13ThIrXiYr1EEJfjQhWmLOa1IyGOZeunaZoJBNuCH9e9ODh', '2025-05-08 23:59:44', '2025-05-18 08:50:35', 19, '081334536478', 'Mahasiswa', '-', '-'),
 (11, 'Luceeal', 'sahidkaswawii26@gmail.com', '106675211844942621617', NULL, NULL, 'user', NULL, '2025-05-15 04:25:17', '2025-05-15 04:25:17', NULL, NULL, NULL, NULL, NULL),
 (12, 'muhammad raysa', 'muhammadraysa74@gmail.com', '108997982119265019484', NULL, NULL, 'admin', NULL, '2025-05-19 00:08:00', '2025-05-19 00:08:00', NULL, NULL, NULL, NULL, NULL),
@@ -528,7 +551,7 @@ ALTER TABLE `laporan`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -552,7 +575,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `pilihan_sehat`
 --
 ALTER TABLE `pilihan_sehat`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `users`

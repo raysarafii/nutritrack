@@ -7,7 +7,6 @@
 - 🔍 **Cari Makanan**: Menampilkan data kalori dan gula berdasarkan pencarian makanan dari API USDA.
 - 🧾 **Catat Konsumsi Harian**: Form untuk mencatat makanan yang dikonsumsi per hari.
 - 📊 **Ringkasan Gizi Harian**: Menampilkan total gula dan kalori yang telah dikonsumsi.
-- 🗓️ **Riwayat Makanan**: Melihat riwayat konsumsi harian berdasarkan tanggal.
 
 ## 🛠️ Teknologi yang Digunakan
 

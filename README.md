@@ -1,6 +1,6 @@
 # NutriTrack 🍽️
 
-**NutriTrack** adalah aplikasi pelacak asupan makanan harian yang membantu pengguna mengelola konsumsi gula dan kalori. Aplikasi ini menggunakan [USDA FoodData Central API](https://fdc.nal.usda.gov/api-key-signup.html) untuk memperoleh data nutrisi secara real-time.
+**NutriTrack** adalah aplikasi pelacak asupan makanan harian yang membantu pengguna mengelola konsumsi gula dan kalori.
 
 ## ✨ Fitur Utama
 

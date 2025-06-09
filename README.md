@@ -39,8 +39,8 @@ Ikuti langkah-langkah berikut untuk menjalankan NutriTrack di perangkat Anda:
     * Jalankan **`npm install`** untuk menginstal dependensi JavaScript.
 
 4.  **Jalankan Aplikasi**:
-    *Bisa dengan klik file **`start.bat`**
-	* Atau *
+    Bisa dengan klik file **`start.bat`**
+	* Atau
        **`php artisan serve`**
        **`npm run dev`**
 

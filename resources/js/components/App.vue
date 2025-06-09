@@ -76,13 +76,10 @@ export default {
     toggleMobileMenu() {
       this.isMobileMenuOpen = !this.isMobileMenuOpen;
     },
-    // MODIFIED: Method baru untuk menutup menu saat link di-klik
     handleMenuClick() {
-      // Menutup sidebar jika sedang terbuka
       if (this.isMobileMenuOpen) {
         this.isMobileMenuOpen = false;
       }
-      // Browser akan menangani scroll ke #id secara otomatis
     }
   }
 }

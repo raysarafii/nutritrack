@@ -83,7 +83,6 @@ export default {
     };
   },
   mounted() {
-    // Check if there's a category in the URL query params
     const urlParams = new URLSearchParams(window.location.search);
     this.currentKategori = urlParams.get('kategori') || null;
     
@@ -97,7 +96,6 @@ export default {
     changeCategory(category) {
       this.currentKategori = category;
       
-      // Update URL query parameter
       if (category) {
         const url = new URL(window.location);
         url.searchParams.set('kategori', category);
@@ -126,7 +124,6 @@ export default {
         
         this.items = response.data.items || [];
         
-        // Fix image paths if needed
         this.items.forEach(item => {
           if (item.gambar_path && !item.gambar_path.startsWith('http')) {
             item.gambar_path = `/${item.gambar_path}`;
@@ -143,16 +140,13 @@ export default {
     async confirmDelete(id) {
       if (confirm('Yakin ingin menghapus item ini?')) {
         try {
-          // Dapatkan token CSRF dari meta tag
           const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
           
-          // Pastikan token CSRF ada
           if (!csrfToken) {
             this.toast.error('CSRF token tidak ditemukan. Silakan refresh halaman.');
             return;
           }
           
-          // Kirim request dengan header yang benar
           const response = await axios.delete(`/admin/pilihan-sehat/${id}`, {
             headers: {
               'X-CSRF-TOKEN': csrfToken,
@@ -161,7 +155,6 @@ export default {
             }
           });
           
-          // Periksa status response
           if (response.status === 200 || response.status === 204) {
             this.toast.success('Data berhasil dihapus');
             // Refresh data
@@ -172,7 +165,6 @@ export default {
           }
         } catch (error) {
           console.error('Error deleting item:', error);
-          // Tampilkan detail error yang lebih spesifik
           const errorMessage = error.response?.data?.message || error.message || 'Terjadi kesalahan saat menghapus data';
           this.toast.error(`Gagal menghapus data: ${errorMessage}`);
         }

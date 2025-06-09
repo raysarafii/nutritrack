@@ -113,7 +113,6 @@
 </template>
 
 <script>
-// Bagian script tetap sama dan tidak perlu diubah.
 import { reactive, ref, onMounted } from 'vue';
 import { useToast } from 'vue-toastification';
 import axios from 'axios';
@@ -139,7 +138,7 @@ export default {
       nama: 'Teh Manis',
       kadar_gula: '15',
       kadar_kalori: '60',
-      tanggal_konsumsi: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
+      tanggal_konsumsi: new Date().toISOString().split('T')[0], 
       waktu_konsumsi: 'Pagi',
       catatan: 'Minum dengan sarapan'
     });

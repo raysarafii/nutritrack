@@ -135,7 +135,7 @@ export default {
       errors: {},
       kategoriOptions: ['Minuman', 'Buah', 'Sayur', 'Protein', 'Karbohidrat'],
       toast: useToast(),
-      imagePreviewUrl: null, // New data property for image preview
+      imagePreviewUrl: null, 
     };
   },
   methods: {
@@ -144,14 +144,13 @@ export default {
       this.form.gambar_path = file;
 
       if (file) {
-        // Create a URL for the image preview
         const reader = new FileReader();
         reader.onload = (e) => {
           this.imagePreviewUrl = e.target.result;
         };
         reader.readAsDataURL(file);
       } else {
-        this.imagePreviewUrl = null; // Clear preview if no file is selected
+        this.imagePreviewUrl = null;
       }
     },
     async submitForm() {

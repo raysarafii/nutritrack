@@ -43,7 +43,6 @@ import { reactive, ref } from 'vue';
 import { useToast } from 'vue-toastification';
 import axios from 'axios';
 
-// Set up axios to include CSRF token
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 const token = document.head.querySelector('meta[name="csrf-token"]');
 if (token) {
@@ -81,10 +80,8 @@ export default {
         laporan.isi_laporan = '';
       } catch (error) {
         if (error.response && error.response.data && error.response.data.errors) {
-          // Copy validation errors to the errors object
           Object.assign(errors, error.response.data.errors);
           
-          // Also show first error as toast
           const firstError = Object.values(error.response.data.errors)[0][0];
           toast.error(firstError);
         } else {

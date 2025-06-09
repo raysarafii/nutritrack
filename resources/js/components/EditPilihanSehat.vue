@@ -128,7 +128,6 @@ export default {
     };
   },
   mounted() {
-    // Extract ID from the URL
     const urlParts = window.location.pathname.split('/');
     this.id = urlParts[urlParts.indexOf('pilihan-sehat') + 1];
     this.fetchData();
@@ -171,13 +170,11 @@ export default {
     async submitForm() {
       const formData = new FormData();
       
-      // Add all form fields except preview and gambar_path (handled separately)
       for (const key in this.form) {
         if (key === 'preview' || key === 'gambar_path' || key === 'current_gambar_path') continue;
         formData.append(key, this.form[key]);
       }
       
-      // Only append gambar_path if a new file was selected
       if (this.form.gambar_path) {
         formData.append('gambar_path', this.form.gambar_path);
       }

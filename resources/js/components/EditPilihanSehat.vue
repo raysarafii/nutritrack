@@ -1,86 +1,107 @@
 <template>
-  <div class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md space-y-4">
-    <h1 class="text-3xl font-bold mb-6 text-center text-[#007AFF]">
-      Edit Pilihan Sehat
-    </h1>
-
-    <form @submit.prevent="submitForm" enctype="multipart/form-data">
-      <div>
-        <label for="nama" class="block font-semibold mb-1">Nama</label>
-        <input
-          v-model="form.nama"
-          type="text"
-          id="nama"
-          class="w-full border border-gray-300 rounded px-3 py-2"
-          :class="{ 'border-red-500': errors.nama }"
-        />
-        <p v-if="errors.nama" class="text-red-500 text-sm mt-1">{{ errors.nama }}</p>
+  <div class="min-h-screen bg-gray-50 flex items-start">
+    <div v-if="form.nama || errors.nama" class="max-w-3xl w-full mx-auto bg-white p-6 rounded-2xl shadow-lg">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">Edit Pilihan Sehat</h1>
+        <p class="text-gray-500 mt-2">Perbarui detail item di bawah ini.</p>
       </div>
 
-      <div>
-        <label for="gambar_path" class="block font-semibold mb-1">Gambar</label>
-        <input
-          type="file"
-          id="gambar_path"
-          @change="handleFileUpload"
-          class="w-full border border-gray-300 rounded px-3 py-2"
-          :class="{ 'border-red-500': errors.gambar_path }"
-        />
-        <p v-if="errors.gambar_path" class="text-red-500 text-sm mt-1">{{ errors.gambar_path }}</p>
+      <form @submit.prevent="submitForm" enctype="multipart/form-data">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+          
+          <div class="md:col-span-2 space-y-6">
+            <div>
+              <label class="block font-medium text-sm text-gray-700 mb-1" for="nama">Nama</label>
+              <input
+                v-model="form.nama"
+                type="text"
+                id="nama"
+                placeholder="Nama item"
+                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition duration-200"
+                :class="{ 'border-red-500': errors.nama }"
+              />
+              <p v-if="errors.nama" class="text-red-500 text-sm mt-1">{{ errors.nama[0] }}</p>
+            </div>
 
-        <img
-          v-if="form.preview"
-          :src="form.preview"
-          alt="Current Image"
-          class="mt-2 w-32 rounded"
-        />
-      </div>
+            <div>
+              <label class="block font-medium text-sm text-gray-700 mb-1" for="deskripsi">Deskripsi</label>
+              <textarea
+                v-model="form.deskripsi"
+                id="deskripsi"
+                rows="5"
+                placeholder="Deskripsi singkat mengenai item..."
+                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition duration-200"
+                :class="{ 'border-red-500': errors.deskripsi }"
+              ></textarea>
+              <p v-if="errors.deskripsi" class="text-red-500 text-sm mt-1">{{ errors.deskripsi[0] }}</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+               <div>
+                <label class="block font-medium text-sm text-gray-700 mb-1" for="urutan">Urutan</label>
+                <input
+                  v-model.number="form.urutan"
+                  type="number"
+                  id="urutan"
+                  class="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition duration-200"
+                  :class="{ 'border-red-500': errors.urutan }"
+                />
+                <p v-if="errors.urutan" class="text-red-500 text-sm mt-1">{{ errors.urutan[0] }}</p>
+              </div>
 
-      <div>
-        <label for="deskripsi" class="block font-semibold mb-1">Deskripsi</label>
-        <textarea
-          v-model="form.deskripsi"
-          id="deskripsi"
-          rows="4"
-          class="w-full border border-gray-300 rounded px-3 py-2"
-          :class="{ 'border-red-500': errors.deskripsi }"
-        ></textarea>
-        <p v-if="errors.deskripsi" class="text-red-500 text-sm mt-1">{{ errors.deskripsi }}</p>
-      </div>
+              <div>
+                <label class="block font-medium text-sm text-gray-700 mb-1" for="aktif">Status</label>
+                <select
+                  v-model="form.aktif"
+                  id="aktif"
+                  class="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition duration-200"
+                  :class="{ 'border-red-500': errors.aktif }"
+                >
+                  <option value="1">Aktif</option>
+                  <option value="0">Tidak Aktif</option>
+                </select>
+                <p v-if="errors.aktif" class="text-red-500 text-sm mt-1">{{ errors.aktif[0] }}</p>
+              </div>
+            </div>
 
-      <div>
-        <label for="urutan" class="block font-semibold mb-1">Urutan</label>
-        <input
-          v-model.number="form.urutan"
-          type="number"
-          id="urutan"
-          class="w-full border border-gray-300 rounded px-3 py-2"
-          :class="{ 'border-red-500': errors.urutan }"
-        />
-        <p v-if="errors.urutan" class="text-red-500 text-sm mt-1">{{ errors.urutan }}</p>
-      </div>
+          </div>
 
-      <div>
-        <label for="aktif" class="block font-semibold mb-1">Aktif</label>
-        <select
-          v-model="form.aktif"
-          id="aktif"
-          class="w-full border border-gray-300 rounded px-3 py-2"
-          :class="{ 'border-red-500': errors.aktif }"
-        >
-          <option value="1">Ya</option>
-          <option value="0">Tidak</option>
-        </select>
-        <p v-if="errors.aktif" class="text-red-500 text-sm mt-1">{{ errors.aktif }}</p>
-      </div>
+          <div class="md:col-span-1">
+            <label class="block font-medium text-sm text-gray-700 mb-1">Gambar</label>
+            <div class="mt-1">
+              <div class="group relative w-full aspect-square rounded-lg border-2 border-gray-300 border-dashed flex items-center justify-center overflow-hidden" :class="{ 'border-red-500': errors.gambar_path }">
+                <img v-if="form.preview" :src="form.preview" alt="Preview" class="w-full h-full object-cover">
+                <div v-else class="text-center text-gray-400">
+                  <svg class="mx-auto h-12 w-12" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  <p class="mt-2 text-sm">Tidak ada gambar</p>
+                </div>
+                
+                <label for="gambar_path" class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition duration-300 flex items-center justify-center cursor-pointer">
+                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity">Ubah Gambar</span>
+                </label>
+                <input id="gambar_path" name="gambar_path" type="file" class="sr-only" @change="handleFileUpload">
+              </div>
+            </div>
+             <p v-if="errors.gambar_path" class="text-red-500 text-sm mt-1">{{ errors.gambar_path[0] }}</p>
+          </div>
+        </div>
 
-      <button
-        type="submit"
-        class="appearance-none bg-blue-400 text-white px-6 py-2 rounded font-semibold hover:bg-blue-500"
-      >
-        Simpan Perubahan
-      </button>
-    </form>
+        <div class="pt-8 flex justify-end items-center gap-4">
+          <a href="/admin/pilihan-sehat" class="text-sm font-semibold text-gray-600 hover:text-gray-800">
+            Batal
+          </a>
+          <button
+            type="submit"
+            class="bg-blue-600 text-white font-bold px-8 py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300 transform hover:scale-105"
+          >
+            Simpan Perubahan
+          </button>
+        </div>
+      </form>
+    </div>
+    <div v-else class="text-center">
+      <p class="text-gray-500">Memuat data...</p>
+    </div>
   </div>
 </template>
 

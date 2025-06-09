@@ -17,16 +17,17 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        // Periksa apakah user sudah login dan memiliki role "admin"
-        if (!Auth::check() || Auth::user()->role !== 'admin') {
+        $allowedRoles = ['admin', 'dokter_pencegahan', 'dokter_pengobatan'];
+
+        if (!Auth::check() || !in_array(Auth::user()->role, $allowedRoles)) {
             if ($request->wantsJson() || $request->ajax()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Akses ditolak. Anda tidak memiliki izin admin.'
+                    'message' => 'Akses ditolak. Anda tidak memiliki izin yang sesuai.'
                 ], 403);
             }
-            
-            return redirect('/dashboard')->with('error', 'Akses ditolak. Anda tidak memiliki izin admin.');
+
+            return redirect('/dashboard')->with('error', 'Akses ditolak. Anda tidak memiliki izin yang sesuai.');
         }
 
         return $next($request);

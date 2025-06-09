@@ -63,7 +63,6 @@ document.getElementById('chat-form').addEventListener('submit', function(e) {
     });
 });
 
-// ===== POLLING UNTUK AMBIL PESAN TERBARU =====
 function fetchMessages() {
     fetch("{{ route('konsultasi.fetch.user', $userId) }}")
         .then(response => response.json())

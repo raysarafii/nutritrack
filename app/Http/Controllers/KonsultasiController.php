@@ -30,37 +30,43 @@ class KonsultasiController extends Controller
 
         return view('dashboard.konsultasi.dokter', compact('users', 'role'));
     }
-public function chatPageWithUser($userId)
-{
-    $auth = Auth::user();
-    if (!in_array($auth->role, ['dokter_pencegahan', 'dokter_pengobatan', 'user'])) {
-        abort(403, "Access denied. You are not authorized to view this page.");
-    }
-    if (in_array($auth->role, ['dokter_pencegahan', 'dokter_pengobatan'])) {
-        $messages = Message::where(function ($query) use ($auth, $userId) {
-            $query->where('to_role', $auth->role)
-                  ->where('from_id', $userId);
-        })->orWhere(function ($query) use ($auth, $userId) {
-            $query->where('from_id', $auth->id)
-                  ->where('to_id', $userId);
-        })->orderBy('created_at')->get();
-    }
-    else {
-        $messages = Message::where(function ($query) use ($auth, $userId) {
-            $query->where('from_id', $auth->id)
-                  ->where('to_id', $userId);
-        })->orWhere(function ($query) use ($auth, $userId) {
-            $query->where('from_id', $userId)
-                  ->where('to_id', $auth->id);
-        })->orderBy('created_at')->get();
+ public function chatPageWithUser($userId)
+    {
+        $auth = Auth::user();
+        if (!in_array($auth->role, ['dokter_pencegahan', 'dokter_pengobatan', 'user'])) {
+            abort(403, "Access denied. You are not authorized to view this page.");
+        }
+
+
+        if (in_array($auth->role, ['dokter_pencegahan', 'dokter_pengobatan'])) {
+            $messages = Message::where(function ($query) use ($auth, $userId) {
+                $query->where('from_id', $auth->id)
+                      ->where('to_id', $userId);
+            })->orWhere(function ($query) use ($auth, $userId) {
+                $query->where('from_id', $userId)
+                      ->where('to_id', $auth->id); 
+            })->orWhere(function ($query) use ($auth, $userId) {
+                $query->where('from_id', $userId)
+                      ->whereNull('to_id')
+                      ->where('to_role', $auth->role);
+            })->orderBy('created_at')->get();
+        } else {
+            $messages = Message::where(function ($query) use ($auth, $userId) {
+                $query->where('from_id', $auth->id)
+                      ->where('to_id', $userId);
+            })->orWhere(function ($query) use ($auth, $userId) {
+                $query->where('from_id', $userId)
+                      ->where('to_id', $auth->id);
+            })->orderBy('created_at')->get();
+        }
+
+        return view('dashboard.konsultasi.chatdokter', [
+            'messages' => $messages,
+            'role' => $auth->role,
+            'userId' => $userId,
+        ]);
     }
 
-    return view('dashboard.konsultasi.chatdokter', [
-        'messages' => $messages,
-        'role' => $auth->role,
-        'userId' => $userId,
-    ]);
-}
 public function chatPage($role)
 {
     $userId = Auth::id();
@@ -113,24 +119,28 @@ public function fetchMessages($role)
 
     return response()->json($messages);
 }
-public function fetchMessagesFromUser($userId)
-{
-    $userRole = Auth::user()->role;
+ public function fetchMessagesFromUser($userId)
+    {
+        $authId = Auth::id();
+        $authUserRole = Auth::user()->role;
 
-    $messages = Message::where(function ($query) use ($userId) {
-        $query->where('from_id', $userId)
-              ->orWhere('to_id', $userId);
-    })
-    ->orWhere(function ($query) use ($userId) {
-        $query->whereNull('to_id')
-              ->whereIn('to_role', ['dokter_pencegahan', 'dokter_pengobatan'])
-              ->where('from_id', '!=', Auth::id());
-    })
-    ->orderBy('created_at', 'asc')
-    ->get();
+        $messages = Message::where(function ($query) use ($authId, $userId) {
+            $query->where('from_id', $authId)
+                  ->where('to_id', $userId);
+        })
+        ->orWhere(function ($query) use ($authId, $userId, $authUserRole) {
+            $query->where('from_id', $userId)
+                  ->where(function($q) use ($authId, $authUserRole) {
+                      $q->where('to_id', $authId) 
+                        ->orWhere(function($subQ) use ($authUserRole) {
+                            $subQ->whereNull('to_id') 
+                                 ->where('to_role', $authUserRole);
+                        });
+                  });
+        })
+        ->orderBy('created_at', 'asc')
+        ->get();
 
-    return response()->json($messages);
-}
-
-
+        return response()->json($messages);
+    }
 }

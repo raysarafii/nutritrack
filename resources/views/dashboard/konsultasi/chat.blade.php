@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="p-6">
-    <h2 class="text-xl font-bold mb-4">Chat dengan Dokter {{ ucfirst(str_replace('_', ' ', $role)) }}</h2>
+    <h2 class="text-xl font-bold mb-4">Chat dengan {{ ucfirst(str_replace('_', ' ', $role)) }}</h2>
     
     <div id="chat-box" class="border rounded-lg p-4 h-96 overflow-y-auto bg-white mb-4">
         @foreach($messages as $msg)

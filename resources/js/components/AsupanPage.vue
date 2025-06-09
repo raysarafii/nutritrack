@@ -82,30 +82,31 @@
           </div>
         </form>
       </div>
-      
-      <div class="bg-white rounded-2xl shadow p-4 sm:p-6">
-        <h2 class="text-lg font-semibold mb-4">Cek Gula & Kalori Otomatis</h2>
-        <div class="flex flex-col sm:flex-row gap-4 items-center">
-          <input
-            type="text"
-            v-model="cekNama"
-            placeholder="Masukkan nama makanan/minuman"
-            class="border border-blue-400 rounded-xl px-4 py-2 w-full"
-          />
-          <button type="button" @click="cekGulaKaloriOtomatis" :disabled="isChecking"
-            class="px-6 py-2 rounded-xl border border-blue-300 text-blue-600 hover:bg-blue-50 transition w-full sm:w-auto text-center whitespace-nowrap">
-            {{ isChecking ? 'Mengecek...' : 'Cek Gula & Kalori' }}
-          </button>
-        </div>
-        <div v-if="cekHasil" class="mt-4 text-sm text-gray-700 p-4 bg-blue-50 rounded-lg">
-          <div><b>Nama:</b> {{ cekHasil.nama }}</div>
-          <div><b>Gula:</b> {{ cekHasil.gula }} gram</div>
-          <div><b>Kalori:</b> {{ cekHasil.kalori }} kcal</div>
-          <button @click="isiKeForm" class="mt-3 px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold transition">
-            Isi ke Form
-          </button>
-        </div>
-      </div>
+   <div class="bg-white rounded-2xl shadow p-4 sm:p-6">
+  <h2 class="text-lg font-semibold mb-4">Cek Gula & Kalori Otomatis</h2>
+  <div class="flex flex-col sm:flex-row gap-4 items-center">
+    <input
+      type="text"
+      v-model="cekNama"
+      placeholder="Masukkan nama makanan/minuman dalam Bahasa Inggris"
+      class="border border-blue-400 rounded-xl px-4 py-2 w-full"
+    />
+    <button type="button" @click="cekGulaKaloriOtomatis" :disabled="isChecking"
+      class="px-6 py-2 rounded-xl border border-blue-300 text-blue-600 hover:bg-blue-50 transition w-full sm:w-auto text-center whitespace-nowrap">
+      {{ isChecking ? 'Mengecek...' : 'Cek Gula & Kalori' }}
+    </button>
+  </div>
+  <div v-if="cekHasil" class="mt-4 text-sm text-gray-700 p-4 bg-blue-50 rounded-lg">
+    <div><b>Nama:</b> {{ cekHasil.nama }}</div>
+    <div><b>Gula:</b> {{ cekHasil.gula }} gram</div>
+    <div><b>Kalori:</b> {{ cekHasil.kalori }} kcal</div>
+    <button @click="isiKeForm" class="mt-3 px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold transition">
+      Isi ke Form
+    </button>
+  </div>
+</div>
+
+
 
     </div>
   </div>

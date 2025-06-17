@@ -11,7 +11,8 @@
 * 📊 **Ringkasan Gizi Harian**: Menampilkan total gula dan kalori yang telah dikonsumsi.
 
 ---
-
+Link Video Presentasi Final Project Youtube : https://youtu.be/-XdN66cHZb0?si=rGmdtf3Rw4FidjeO
+---
 ## 🛠️ Teknologi yang Digunakan
 
 | Teknologi | Deskripsi |

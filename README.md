@@ -31,7 +31,7 @@ Ikuti langkah-langkah berikut untuk menjalankan NutriTrack di perangkat Anda:
     * Buat database baru dengan nama **`nutri`**.
     * Import file **`nutri.sql`** yang tersedia ke basis data yang baru Anda buat.
 
-2.  **Konfigurasi Lingkungan**:
+2.  **Konfigurasi Env**:
     * Ganti nama file **`.env.example`** menjadi **`.env`**.
 
 3.  **Instal Dependensi**:

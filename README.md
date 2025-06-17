@@ -27,7 +27,7 @@ Link Video Presentasi Final Project Youtube : https://youtu.be/-XdN66cHZb0?si=rG
 
 Ikuti langkah-langkah berikut untuk menjalankan NutriTrack di perangkat Anda:
 
-1.  **Pengaturan Basis Data**:
+1.  **Pengaturan Database**:
     * Buat database baru dengan nama **`nutri`**.
     * Import file **`nutri.sql`** yang tersedia ke basis data yang baru Anda buat.
 

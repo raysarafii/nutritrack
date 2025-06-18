@@ -29,7 +29,7 @@ Ikuti langkah-langkah berikut untuk menjalankan NutriTrack di perangkat Anda:
 
 1.  **Pengaturan Database**:
     * Buat database baru dengan nama **`nutri`**.
-    * Import file **`nutri.sql`** yang tersedia ke basis data yang baru Anda buat.
+    * Import file **`nutri.sql`** yang tersedia ke database yang baru Anda buat.
 
 2.  **Konfigurasi Env**:
     * Ganti nama file **`.env.example`** menjadi **`.env`**.
@@ -46,3 +46,57 @@ Ikuti langkah-langkah berikut untuk menjalankan NutriTrack di perangkat Anda:
        **`npm run dev`**
 
 ---
+
+## 📁 Struktur Project
+
+nutritrack/
+├── 📁 app/                          # Main Directory Laravel
+│   ├── 📁 Console/                  # Command line commands
+│   ├── 📁 Exceptions/               # Exception handlers
+│   ├── 📁 Http/                     # Controllers, Middleware, Requests
+│   ├── 📁 Models/                   # Eloquent models
+│   ├── 📁 Notifications/            # Notification classes
+│   ├── 📁 Providers/                # Service providers
+│   └── 📁 View/                     # View composers
+├── 📁 bootstrap/                    # Framework bootstrap files
+├── 📁 config/                       # Config aplikasi
+├── 📁 database/                     # Database Files
+│   ├── 📁 factories/                # Model factories
+│   ├── 📁 migrations/               # Database migrations
+│   └── 📁 seeders/                  # Database seeders
+├── 📁 public/                       # Public assets
+├── 📁 resources/                    # Frontend resources
+│   ├── 📁 css/                      # Stylesheet files
+│   ├── 📁 js/                       # JavaScript files
+│   │   ├── 📁 components/           # Vue.js components
+│   │   ├── app.js                   # Home
+│   │   ├── bootstrap.js             # Bootstrap 
+│   │   ├── dashboard.js             # Dashboard
+│   │   ├── login.js                 # Login 
+│   │   ├── register.js              # Register
+│   │   ├── asupan.js                # Asupan
+│   │   ├── laporan.js               # Laporan
+│   │   ├── profile.js               # Profile
+│   │   └── pilihansehat.js          # Pilihan Sehat
+│   └── 📁 views/                    # Blade template files
+├── 📁 routes/                       # Route
+│   ├── api.php                      # API routes
+│   └── web.php                      # Web routes
+├── 📁 storage/                      # File storage
+├── 📁 tests/                        # Test files
+├── 📁 vendor/                       # Composer dependencies
+├── 📁 node_modules/                 # NPM dependencies
+├── 📄 .env.example                  # Environment variables template
+├── 📄 .gitignore                    # Git ignore rules
+├── 📄 .vercelignore                 # Vercel ignore rules
+├── 📄 artisan                       # Laravel command line tool
+├── 📄 composer.json                 # PHP dependencies
+├── 📄 composer.lock                 # PHP dependencies lock
+├── 📄 package.json                  # Node.js dependencies
+├── 📄 package-lock.json             # Node.js dependencies lock
+├── 📄 phpunit.xml                   # PHPUnit configuration
+├── 📄 postcss.config.js             # PostCSS configuration
+├── 📄 start.bat                     # Windows startup script
+├── 📄 tailwind.config.js            # Tailwind CSS configuration
+└── 📄 vite.config.js                # Vite build configuration
+```

@@ -48,7 +48,7 @@ Ikuti langkah-langkah berikut untuk menjalankan NutriTrack di perangkat Anda:
 ---
 
 ## 📁 Struktur Project
-
+```
 nutritrack/
 ├── 📁 app/                          # Main Directory Laravel
 │   ├── 📁 Console/                  # Command line commands

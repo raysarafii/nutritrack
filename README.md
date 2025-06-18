@@ -11,7 +11,17 @@
 * 📊 **Ringkasan Gizi Harian**: Menampilkan total gula dan kalori yang telah dikonsumsi.
 
 ---
-Link Video Presentasi Final Project Youtube : https://youtu.be/-XdN66cHZb0?si=rGmdtf3Rw4FidjeO
+Anggota Kelompok Wong Liyo Ngerti Opo :
+
+| **Nama**                        | **Role**                                | **Tugas**                                                                                                                                             |
+|--------------------------------|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Rozy Setia Irmawan**         | Product Manager                         | Mengelola visi dan arah produk, menyusun roadmap pengembangan, menjembatani tim teknis dan non-teknis, serta mencari ide dan inovasi produk.         |
+| **Sazkia Sabrina Aura Zahira** | System Analyst & Content Writer         | Menganalisis kebutuhan sistem dari sisi pengguna, menyusun dokumentasi teknis, serta membuat konten halaman web seperti teks deskriptif. |
+| **Muhammad Fachri Afrizal**    | UI/UX Designer & Backend Developer      | Mendesain tampilan antarmuka website di figma secara menyeluruh serta merancang alur interaksi pengguna (user flow) agar mudah digunakan, sekaligus membantu pengembangan sisi backend yaitu autentikasi. |
+| **Muhammad Raysa Rafii'udin**  | Web Developer Utama               | Mengelola keseluruhan proses pengembangan website, menangani pengembangan website secara end-to-end, mencakup pembuatan tampilan frontend, pengelolaan logika backend |
+
+---
+Link Video Presentasi Final Project Youtube : https://youtu.be/bG7SyxmlYqI?si=-Jq6jlAk-xgwDpZe
 ---
 ## 🛠️ Teknologi yang Digunakan
 
